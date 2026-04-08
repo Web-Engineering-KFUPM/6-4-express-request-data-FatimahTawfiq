@@ -144,10 +144,10 @@ app.get("/profile/:first/:last", (req, res) => {
 });
 
 // Route param middleware example: /users/42
-app.param("userId", (req,res,next,userId)=>{
-   const num = Number(userId);
+app.param("userId", (req, res, next, userId) => {
+  const num = Number(userId);
 
-  if (num <= 0) {
+  if (isNaN(num) || num <= 0) {
     return res.status(400).json({
       ok: false,
       error: "userId must be positive number"
@@ -159,6 +159,12 @@ app.param("userId", (req,res,next,userId)=>{
 });
 
 // Route params: /users/:userId route
+app.get("/users/:userId", (req, res) => {
+  res.json({
+    ok: true,
+    userId: req.userIdNum
+  });
+});
 
 
 // Start the server by listening
